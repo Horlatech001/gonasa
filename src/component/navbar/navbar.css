@@ -1,0 +1,27 @@
+*{
+    font-family: "Raleway";
+}
+.nav_bar{
+    padding: 16px 60px !important;
+    background-color: #fff !important;
+}
+
+.nav-item{
+    margin-left: 25px !important;
+    font-weight: bold;
+}
+
+.nav-link{
+    color: #000 !important;
+}
+
+.logo{
+    width: 160px;
+}
+
+@media (max-width: 480px){
+    .nav_bar{
+        padding: 16px 20px !important;
+        background-color: #fff !important;
+    }
+}

@@ -1,0 +1,335 @@
+.hero_banner{
+    height: 90vh;
+    background:linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+    url("../../images/banner.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #fff;
+}
+
+.hero_text :nth-child(1){
+    margin-top: 100px;
+    font-weight: 100;
+}
+
+.hero_text :nth-child(2){
+    font-size: 2.5em;
+    font-weight: bolder;
+    letter-spacing: 1px;
+}
+
+.line{
+    font-size: 1em !important;
+    border-bottom: 4px solid #EC1C24;
+}
+
+/* Categories Section */
+.categories_section{
+    height: auto;
+    padding-top: 80px;
+    padding-bottom: 80px;
+}
+
+.inner_cat{
+    height: auto;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    width: 80% !important;
+    margin: auto;
+    background-color: #DFDFDF;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.boxes > img{
+    width: 150px;
+}
+
+.cat_text{
+    width: 50% !important;
+    margin: auto;
+    margin-top: 50px !important;
+}
+
+.cat_text > p {
+    font-size: 18px;
+}
+
+/* State Section */
+.state_text{
+    width: 80% !important;
+    margin: auto;
+    margin-top: 50px !important;
+}
+
+.state_text > h4{
+    color: #06508D;
+    font-weight: bolder;
+}
+
+.governors{
+    display: flex;
+    width: 60% !important;
+    margin: auto;
+    margin-top: 20px !important;
+    justify-content: center;
+}
+
+.seyi_box{
+    margin-left: 80px;
+}
+
+.govs_box > img {
+    width: 150px;
+    margin-bottom: 10px;
+}
+
+.govs_box > h5{
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.govs_box > h6{
+    font-size: 14px;
+}
+
+.state_wrapper{
+    height: 155px;
+    width: 150px;
+    background-color: #309434;
+    margin-left: 80px;
+    position: relative;
+}
+
+.state_wrapper > h6 {
+    font-weight: 500;
+    color: #fff;
+    position: absolute;
+    bottom: 10px;
+    margin-left: 10px;
+}
+
+.state_border{
+    height: 20px;
+    width: 150px;
+    background-color: #EC1C24;
+    margin-top: 7px;
+    margin-left: 80px;
+}
+
+/* Assembly */
+
+.assembly{
+    height: auto;
+    background-color: #F0EFFD;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.assembly_group{
+    margin-top: 20px !important;
+    width: 80% !important;
+    margin: auto !important;
+    margin-top: 20px !important;
+}
+
+.assembly_left{
+    display: flex;
+}
+
+.assembly_right{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.aleft_1 > img{
+    width: 150px;
+    margin-bottom: 10px;
+}
+
+.aleft_2 > img{
+    width: 150px;
+    margin-bottom: 10px;
+    margin-left: 50px;
+}
+
+.aleft_1 > h5{
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.aleft_1 > h6{
+    font-size: 14px;
+}
+
+.aleft_2 > h5{
+    font-size: 16px;
+    font-weight: bold;
+    margin-left: 50px;
+}
+
+.aleft_2 > h6{
+    font-size: 14px;
+    margin-left: 50px;
+}
+
+
+.divider{
+    height: 150px;
+    width: 2px;
+    background-color: #06508D;
+}
+
+.all_senators{
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.all_reps{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 25px;
+}
+
+.m_line{
+    display: flex;
+    justify-content: center;
+}
+
+.a_line{
+    width: 120px;
+    height: 1px;
+    background-color: #EC1C24;
+}
+
+.r_line{
+    width: 120px;
+    height: 1px;
+    background-color: #06508D;
+}
+
+.senators{
+    background-color: #EC1C24;
+    width: max-content;
+    padding: 2px 5px;
+    color: #fff;
+    font-size: 12px;
+}
+
+
+.reps{
+    background-color: #06508D;
+    width: max-content;
+    padding: 2px 5px;
+    color: #fff;
+    font-size: 12px;
+}
+
+
+
+/* Media queries */
+
+@media (max-width: 768px){
+    .inner_cat{
+        width: 90% !important;
+    }
+
+    .boxes > img{
+        width: 130px;
+    }
+
+    .cat_text{
+        width: 80% !important;
+        margin: auto;
+        margin-top: 30px !important;
+    }
+
+    .state_text{
+        width: 90% !important;
+        margin: auto;
+    }
+
+    .seyi_box, .state_wrapper, .state_border{
+        margin-left: 60px;
+    }
+
+    .assembly_left{
+        display: flex;
+        justify-content: space-evenly;
+    }
+
+    .assembly_right{
+        display: flex;
+        justify-content: space-evenly;
+        margin-top: 50px;
+    }
+
+    .all_senators{
+        justify-content: center;
+    }
+
+    .all_reps{
+        justify-content: center;
+    }
+
+    .divider{
+       display: none;
+    }
+
+
+}
+
+@media (max-width: 600px){
+    .inner_cat{
+        width: 90% !important;
+        flex-wrap: wrap;
+        row-gap: 50px;
+    }
+
+    .governors{
+        flex-wrap: wrap;
+    }
+
+    .seyi_box, .state_wrapper, .state_border{
+        margin-left: 30px;
+    }
+
+    .state_wrapper{
+        margin-top: 30px;
+    }
+}
+
+@media (max-width: 480px){
+
+    .categories_section{
+        padding-bottom: 20px;
+    }
+
+    .seyi_box, .state_wrapper, .state_border{
+        margin-left: 0px;
+        margin-top: 0;
+    }
+
+    .govs_box, .seyi_box, .state_wrapper{
+        margin-bottom: 10px;
+    }
+
+    .assembly{
+        padding-top: 0;
+    }
+
+    .senators, .reps{
+        text-align: center;
+    }
+
+    .aleft_2 > h5, .aleft_2 > img, .aleft_2 > h6{
+        margin-left: 30px;
+    }
+}
