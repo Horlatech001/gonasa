@@ -2,13 +2,13 @@ import "./home.css";
 import Senator from "../../images/senator.png";
 import Reps from "../../images/reps.png";
 import States from "../../images/933 State.png";
-import Others from "../../images/browse state.png";
 import Gov1 from "../../images/Abdulrahman (1).png"
 import Gov2 from "../../images/Seyi.png";
 import Rep1 from "../../images/Rectangle 19882.png";
 import Rep2 from "../../images/Rectangle 19883.png";
 import Rep3 from "../../images/Rectangle 19884.png";
 import Rep4 from "../../images/Rectangle 19885.png";
+
 
 
 const Home = () => {
@@ -33,9 +33,6 @@ const Home = () => {
             </div>
             <div className="boxes">
               <img src={States} alt="States" />
-            </div>
-            <div className="boxes">
-              <img src={Others} alt="Others" />
             </div>
           </div>
           <div className="cat_text">
@@ -128,12 +125,29 @@ const Home = () => {
 
             <div className="all_reps mt-3">
               <div className="r_line"></div>
-                <div className="reps">
-                  All Reps
-                </div>
+              <div className="reps">
+                All Reps
+              </div>
               <div className="r_line"></div>
             </div>
           </div>
+        </div>
+      </div>
+      <div className="container-fluid mt-4">
+        <div className="row">
+          <div className="state_text">
+            <h4>State Assembly</h4>
+            <h4>Members</h4>
+          </div>
+        </div>
+        <div className="inner_cat_1">
+            <p>Click on the button to see all 933 state house of assembly members  </p>
+            <button className="state_button">State Assembly Members</button>
+        </div>
+      </div>
+      <div className="container-fluid footer">
+        <div className="row">
+          <p className="footer-text"> &copy; 2024 The ICIR, All Rights Reserved.</p>
         </div>
       </div>
     </>
