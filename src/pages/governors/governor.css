@@ -1,0 +1,109 @@
+.title>p {
+    margin-top: 50px;
+    text-align: center;
+    color: #06508D;
+    font-size: 25px;
+}
+
+.title>div {
+    width: 100px;
+    height: 0.6px;
+    margin: auto;
+    background-color: #06508D;
+    margin-top: -10px;
+}
+
+.filter_box {
+    height: 200px;
+}
+
+.accordion-header {
+    position: relative;
+}
+
+.accordion-button {
+    background-color: #dfdfdf4b !important;
+}
+
+.accordion-button::after {
+    background-image: none !important;
+}
+
+.accordion-body {
+    background-color: #dfdfdf4b !important;
+}
+
+.accordion-body>input {
+    background-color: transparent;
+    border: 1px solid #73737380;
+    width: 95%;
+    height: 40px;
+    outline: none;
+}
+
+.accordion-body>input::placeholder {
+    font-size: 12px;
+    text-indent: 20px;
+}
+
+.accordion-body>ul {
+    list-style: none;
+}
+
+.indented-label {
+    margin-left: 10px;
+}
+
+.icon-wrapper {
+    position: absolute;
+    top: 12px;
+    right: 20px;
+    z-index: 999;
+    font-size: 20px;
+}
+
+.governor_box {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.g_card1 {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.names {
+    display: flex;
+    flex-direction: column;
+}
+
+.names>span {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.governor_card>p {
+    color: #06508D;
+    font-weight: bold;
+}
+
+.governor_card>div>img {
+    width: 200px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.footer {
+    margin-top: 50px;
+    background-color: #000000;
+    color: #fff;
+    height: auto;
+    padding-top: 20px;
+    text-align: center;
+}
+
+.footer-text {
+    font-size: 18px;
+}

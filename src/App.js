@@ -1,11 +1,13 @@
 import Navbar from "./component/navbar/Navbar";
-import Home from "./pages/home/Home";
+import Governor from "./pages/governors/Governor";
+// import Home from "./pages/home/Home";
 
 function App() {
   return (
     <div className="App">
       <Navbar />
-      <Home />
+      {/* <Home /> */}
+      <Governor />
     </div>
   );
 }
