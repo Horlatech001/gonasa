@@ -1,18 +1,12 @@
-import "./governor.css";
-import Alex from "../../images/Alex otti.jpg";
-import Fintiri from "../../images/Fintiri.jpg";
-import Umo from "../../images/Umo.jpg";
-import Charles from "../../images/Charles-Soludo.jpg";
-import Bala from "../../images/Bala.jpg";
-import Diri from "../../images/Douye-Diri.jpg";
+import "./senator.css"
 import { BiPlus, BiMinus } from "react-icons/bi";
 import { useState } from "react";
-import states from "../../../src/data";
-import { parties } from "../../../src/data";
+import states from "../../data";
+import { parties } from "../../data";
 import Pagination from "../../images/pagination.png";
 import { Link } from "react-router-dom";
 
-const Governor = () => {
+const Senator = ({ senators }) => {
   const [isOpen1, setIsOpen1] = useState(true);
   const [isOpen2, setIsOpen2] = useState(false);
   const [visibleStates, setVisibleStates] = useState(states.slice(0, 5));
@@ -60,7 +54,7 @@ const Governor = () => {
   return (
     <>
       <div className="title">
-        <p>Nigerian State Governors</p>
+        <p>Distinguished Senators</p>
         <div></div>
       </div>
 
@@ -159,77 +153,27 @@ const Governor = () => {
               </div>
             </div>
           </div>
-          <div className="col-lg-9 col-md-8 governor_box">
-            <div className="g_card1">
-              <div className="governor_card">
-                <div>
-                  <img src={Alex} alt="alex" />
+          <div className="col-lg-9 col-md-8 senator_box">
+            {senators.map((senator, index) => (
+              <div key={index} className="s_card1">
+                <div className="senator_card">
+                  <div>
+                    <img src={senator?.featuredImage} alt={senator.name} />
+                  </div>
+                  <div>
+                    <Link className="names" to={`/profile/${senator.id}`}>
+                      <span>{`Sen. ${senator?.title}`}</span>
+                      {/* <span>{senator?.taxonomyState}</span> */}
+                    </Link>
+                  <p>{senator?.district}</p>
+                  </div>
                 </div>
-                <div>
-                  <Link className="names" to="/profile">
-                    <span>ALEX</span>
-                    <span>OTTI</span>
-                  </Link>
-                </div>
-                <p>Abia State</p>
               </div>
-              <div className="governor_card">
-                <div>
-                  <img src={Fintiri} alt="alex" />
-                </div>
-                <div className="names">
-                  <span>AHMADU UMARU</span>
-                  <span>FINTIRI</span>
-                </div>
-                <p>Adamawa State</p>
-              </div>
-              <div className="governor_card">
-                <div>
-                  <img src={Umo} alt="alex" />
-                </div>
-                <div className="names">
-                  <span>UMO</span>
-                  <span>ENO</span>
-                </div>
-                <p>Akwa Ibom State</p>
-              </div>
-            </div>
-            <div className="g_card1">
-              <div className="governor_card">
-                <div>
-                  <img src={Charles} alt="alex" />
-                </div>
-                <div className="names">
-                  <span>CHARLES</span>
-                  <span>SOLUDO</span>
-                </div>
-                <p>Anambra State</p>
-              </div>
-              <div className="governor_card">
-                <div>
-                  <img src={Bala} alt="alex" />
-                </div>
-                <div className="names">
-                  <span>BALA</span>
-                  <span>MUHAMMED</span>
-                </div>
-                <p>Bauchi State</p>
-              </div>
-              <div className="governor_card">
-                <div>
-                  <img src={Diri} alt="alex" />
-                </div>
-                <div className="names">
-                  <span>DOUYE</span>
-                  <span>DIRI</span>
-                </div>
-                <p>Bayelsa State</p>
-              </div>
-            </div>
+            ))}
           </div>
-        </div>
-        <div className="pagination">
-          <img src={Pagination} alt="pagination" />
+            <div className="pagination">
+              <img src={Pagination} alt="pagination" />
+            </div>
         </div>
       </div>
 
@@ -245,4 +189,4 @@ const Governor = () => {
   );
 };
 
-export default Governor;
+export default Senator;

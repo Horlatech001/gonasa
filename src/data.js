@@ -38,4 +38,25 @@ const states = [
     { id: 37, label: 'FCT' },
 ];
 
+export const parties = [
+    {id: 1, label:"A"},
+    {id: 2, label:"AA"},
+    {id: 3, label:"ADP"},
+    {id: 4, label:"APP"},
+    {id: 5, label:"AAC"},
+    {id: 6, label:"ADC"},
+    {id: 7, label:"APC"},
+    {id: 8, label:"APGA"},
+    {id: 9, label:"APM"},
+    {id: 10, label:"BP"},
+    {id: 11, label:"LP"},
+    {id: 12, label:"NRM"},
+    {id: 13, label:"NNPP"},
+    {id: 14, label:"PDP"},
+    {id: 15, label:"PRP"},
+    {id: 16, label:"SDP"},
+    {id: 17, label:"YPP"},
+    {id: 18, label:"YP"},
+    {id: 19, label:"ZLP"}
+]
 export default states;

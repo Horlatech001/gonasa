@@ -14,7 +14,7 @@
 }
 
 .filter_box {
-    height: 200px;
+    margin-bottom: 50px;
 }
 
 .accordion-header {
@@ -64,22 +64,27 @@
 
 .governor_box {
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
+    flex-wrap: wrap;
     gap: 20px;
 }
 
 .g_card1 {
     display: flex;
     justify-content: space-evenly;
+    /* background-color: grey; */
 }
+
 
 .names {
     display: flex;
     flex-direction: column;
+    text-decoration: none;
+    color: #000000;
 }
 
 .names>span {
-    font-size: 22px;
+    font-size: 20px;
     font-weight: bold;
 }
 
@@ -95,6 +100,12 @@
     border-radius: 10px;
 }
 
+.pagination>img {
+    width: 300px;
+    margin: auto;
+    margin-top: 50px;
+}
+
 .footer {
     margin-top: 50px;
     background-color: #000000;
@@ -106,4 +117,35 @@
 
 .footer-text {
     font-size: 18px;
+}
+
+@media (max-width: 992px) {
+    .governor_box {
+        height: auto;
+    }
+
+    .governor_card>div>img {
+        width: 150px;
+        height: 150px;
+    }
+
+    .names>span {
+        font-size: 16px;
+    }
+
+    .governor_card>p {
+        font-size: 12px;
+    }
+
+    .g_card1 {
+        display: flex;
+        justify-content: space-evenly;
+    }
+}
+
+@media (max-width: 768px) {
+    .governor_card>div>img {
+        width: 120px;
+        height: 120px;
+    }
 }
