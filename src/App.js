@@ -23,6 +23,7 @@ function App() {
         title: post.title.rendered,
         featuredImage: post._embedded['wp:featuredmedia'][0].source_url, // Extract featured image URL'
         district: post._embedded['wp:term'][1][0]?.name,
+        party: post._embedded['wp:term'][2][0]?.name,
       }));
 
       setSenators(posts);

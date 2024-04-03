@@ -1,9 +1,8 @@
-import "./senator.css"
+import "./senator.css";
 import { BiPlus, BiMinus } from "react-icons/bi";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import states from "../../data";
 import { parties } from "../../data";
-import Pagination from "../../images/pagination.png";
 import { Link } from "react-router-dom";
 
 const Senator = ({ senators }) => {
@@ -12,17 +11,63 @@ const Senator = ({ senators }) => {
   const [visibleStates, setVisibleStates] = useState(states.slice(0, 5));
   const [visibleParties, setVisibleParties] = useState(parties.slice(0, 5));
 
+  const [selectedParties, setSelectedParties] = useState([]);
+
   const [searchQueryState, setSearchQueryState] = useState("");
   const [searchQueryParty, setSearchQueryParty] = useState("");
 
-  const toggleAccordion1 = () => {
-    setIsOpen1(!isOpen1);
-    setIsOpen2(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6;
+
+  const [filteredSenators, setFilteredSenators] = useState([]);
+
+  useEffect(() => {
+    // Ensure currentPage is set to 1 if filtered result is less than itemsPerPage
+    const totalPages = Math.ceil(filteredSenators.length / itemsPerPage);
+    if (totalPages === 1 && currentPage !== 1) {
+      setCurrentPage(1);
+    }
+  }, [filteredSenators, currentPage]); // Add filteredSenators and currentPage as dependencies
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
   };
 
-  const toggleAccordion2 = () => {
-    setIsOpen2(!isOpen2);
-    setIsOpen1(false);
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+
+  const totalPages = Math.ceil(filteredSenators.length / itemsPerPage);
+
+  const renderPagination = () => {
+    if (totalPages <= 1) {
+      return null; // Hide pagination buttons if there's only one page or less
+    }
+  
+    const pages = [];
+    for (let i = 1; i <= totalPages; i++) {
+      pages.push(
+        <li
+          key={i}
+          className={`page-item ${currentPage === i ? "active" : ""}`}
+        >
+          <button className="page-link" onClick={() => handlePageChange(i)}>
+            {i}
+          </button>
+        </li>
+      );
+    }
+    return pages;
+  };
+  
+
+  const toggleAccordion = (accordionNumber) => {
+    if (accordionNumber === 1) {
+      setIsOpen1(!isOpen1);
+      setIsOpen2(false);
+    } else if (accordionNumber === 2) {
+      setIsOpen2(!isOpen2);
+      setIsOpen1(false);
+    }
   };
 
   const handleSearchState = (e) => {
@@ -43,13 +88,29 @@ const Senator = ({ senators }) => {
     setVisibleParties(filtered.slice(0, 5));
   };
 
-  const filteredStates = visibleStates.filter((state) =>
-    state.label.toLowerCase().includes(searchQueryState.toLowerCase())
-  );
+  const handlePartyChange = (e) => {
+    const party = e.target.value;
+    const isChecked = e.target.checked;
 
-  const filteredParties = visibleParties.filter((party) =>
-    party.label.toLowerCase().includes(searchQueryParty.toLowerCase())
-  );
+    let updatedParties;
+    if (isChecked) {
+      updatedParties = [...selectedParties, party];
+    } else {
+      updatedParties = selectedParties.filter((p) => p !== party);
+    }
+
+    setSelectedParties(updatedParties);
+  };
+
+  useEffect(() => {
+    // Update filtered senators when selected parties change
+    const filtered = senators.filter((senator) =>
+      selectedParties.length === 0
+        ? true
+        : selectedParties.includes(senator.party)
+    );
+    setFilteredSenators(filtered);
+  }, [selectedParties, senators]);
 
   return (
     <>
@@ -70,7 +131,7 @@ const Senator = ({ senators }) => {
                   <div
                     className="accordion-button collapsed"
                     type="button"
-                    onClick={toggleAccordion1}
+                    onClick={() => toggleAccordion(1)}
                     aria-expanded={isOpen1 ? "true" : "false"}
                     aria-controls="flush-collapseOne"
                     data-bs-target="#flush-collapseOne"
@@ -113,7 +174,7 @@ const Senator = ({ senators }) => {
                   <div
                     className="accordion-button collapsed"
                     type="button"
-                    onClick={toggleAccordion2}
+                    onClick={() => toggleAccordion(2)}
                     aria-expanded={isOpen2 ? "true" : "false"}
                     aria-controls="flush-collapseTwo"
                     data-bs-target="#flush-collapseTwo"
@@ -141,7 +202,13 @@ const Senator = ({ senators }) => {
                     <ul className="mt-3">
                       {visibleParties.map((party) => (
                         <li key={party.id}>
-                          <input type="checkbox" id={party.id} />
+                          <input
+                            type="checkbox"
+                            id={party.id}
+                            value={party.label}
+                            onChange={handlePartyChange}
+                            checked={selectedParties.includes(party.label)}
+                          />
                           <label htmlFor={party.id} className="indented-label">
                             {party.label}
                           </label>
@@ -154,26 +221,27 @@ const Senator = ({ senators }) => {
             </div>
           </div>
           <div className="col-lg-9 col-md-8 senator_box">
-            {senators.map((senator, index) => (
+            {filteredSenators.slice(indexOfFirstItem, indexOfLastItem).map((senator, index) => (
               <div key={index} className="s_card1">
                 <div className="senator_card">
-                  <div>
+                  <div className="s_img">
                     <img src={senator?.featuredImage} alt={senator.name} />
                   </div>
-                  <div>
+                  <div className="s_details">
                     <Link className="names" to={`/profile/${senator.id}`}>
                       <span>{`Sen. ${senator?.title}`}</span>
-                      {/* <span>{senator?.taxonomyState}</span> */}
                     </Link>
-                  <p>{senator?.district}</p>
+                    <p>{senator?.district}</p>
                   </div>
                 </div>
               </div>
             ))}
           </div>
-            <div className="pagination">
-              <img src={Pagination} alt="pagination" />
-            </div>
+          <div className="pagination">
+            <ul className="pagination justify-content-center">
+              {renderPagination()}
+            </ul>
+          </div>
         </div>
       </div>
 

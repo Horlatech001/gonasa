@@ -1,46 +1,40 @@
 .senator_box {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space-evenly;
 }
 
 .s_card1 {
-    flex: 0 0 calc(33.33% - 20px); 
-    margin-bottom: 20px; 
+    flex: 0 0 calc(33.33% - 50px);
+    margin-bottom: 50px;
+
 }
 
-.names {
-    display: flex;
-    flex-direction: column;
-    text-decoration: none;
-    color: #000000;
+.senator_card {
+    width: 250px;
+    height: 220px;
+    margin: auto;
 }
 
-.names>span {
-    font-size: 20px;
-    font-weight: bold;
+.s_img {
+    width: 100%;
+    height: 80%;
+    border-radius: 10px;
+    overflow: hidden;
 }
 
-.senator_card>p {
+.s_img>img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.s_details>p {
     color: #06508D;
     font-weight: bold;
 }
 
-.senator_card > div {
-    width: 250px;
-    height: 150px;
-    background-color: yellow;
-}
-
-.senator_card>div>img {
-    width: 100%;
-    /* height: 100%; */
-    object-fit: cover;
-    border-radius: 10px;
-}
-
-.pagination>img {
-    width: 300px;
+.pagination{
     margin: auto;
     margin-top: 50px;
 }
@@ -60,12 +54,13 @@
 
 @media (max-width: 992px) {
     .senator_box {
-        height: auto;
+        justify-content: space-between;
     }
 
-    .senator_card>div>img {
-        width: 150px;
-        height: 150px;
+    .senator_card {
+        width: 220px;
+        height: 220px;
+        margin: auto;
     }
 
     .names>span {
@@ -83,8 +78,37 @@
 }
 
 @media (max-width: 768px) {
-    .senator_card>div>img {
-        width: 120px;
-        height: 120px;
+    .senator_box {
+        justify-content: space-between;
+    }
+
+    .senator_card {
+        width: 220px;
+        height: 220px;
+        margin: auto;
+    }
+}
+
+@media (max-width: 575px) {
+    .senator_box {
+        justify-content: space-between;
+    }
+
+    .senator_card {
+        width: 180px;
+        height: 180px;
+        margin: auto;
+    }
+}
+
+@media (max-width: 385px) {
+    .senator_box {
+        justify-content: space-between;
+    }
+
+    .senator_card {
+        width: 150px;
+        height: 150px;
+        margin: auto;
     }
 }
