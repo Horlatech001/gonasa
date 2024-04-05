@@ -1,37 +1,52 @@
+import { useEffect, useState } from "react";
 import "./profile.css";
-import Alex from "../../images/Alex otti.jpg";
 import { BiUserCircle } from "react-icons/bi";
 import { BiCabinet } from "react-icons/bi";
 import { FaUserGraduate } from "react-icons/fa";
-const Profile = () => {
+import { useParams } from "react-router-dom";
+const Profile = ({ senators }) => {
+  const { id } = useParams();
+  const senatorId = parseInt(id);
+
+  const [senator, setSenator] = useState(null);
+
+  useEffect(() => {
+    const foundSenator = senators.find((senator) => senator.id === senatorId);
+    setSenator(foundSenator);
+  }, [senators, senatorId]);
+
+  if (!senator) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <>
       <div className="container profile">
         <div className="row">
           <div className="col-lg-10 offset-lg-1 right_section pt-5">
             <div className="image_box">
-              <img src={Alex} alt="Alex" />
+              <img src={senator?.featuredImage} alt={senator?.title} />
             </div>
             <div>
               <div className="name">
-                <span>ALEX OTTI</span>
-                <span>Abia State Governor</span>
+                <span>{`Sen. ${senator?.title}`}</span>
+                <span>{senator?.district}</span>
               </div>
               <div className="dob mt-2">
                 <b>Date of Birth:</b>
-                <span className="ms-1">1962-12-09</span>
+                <span className="ms-1">{senator?.dob}</span>
               </div>
               <div className="party">
                 <b>Party: </b>
-                <span className="ms-1">APC</span>
+                <span className="ms-1">{senator?.party}</span>
               </div>
               <div className="party">
                 <b>Phone: </b>
-                <span className="ms-1">09035537733</span>
+                <span className="ms-1">{senator?.phone}</span>
               </div>
               <div className="party">
                 <b>Email: </b>
-                <span className="ms-1">Otti@gmail.com</span>
+                <span className="ms-1">{senator?.email}</span>
               </div>
               <div className="email">
                 <b>Address: </b>
@@ -44,25 +59,29 @@ const Profile = () => {
         <div className="row">
           <div className="col-lg-10 offset-lg-1 pt-5">
             <div className="navigations">
-              <ul class="nav nav-tabs nav-fill">
-                <li class="nav-item">
-                  <a class="nav-link active" data-bs-toggle="tab" href="#home">
-                    <span class="icon">
+              <ul className="nav nav-tabs nav-fill">
+                <li className="nav-item">
+                  <a
+                    className="nav-link active"
+                    data-bs-toggle="tab"
+                    href="#home"
+                  >
+                    <span className="icon">
                       <BiUserCircle />
                     </span>
-                    <span class="text">About</span>
+                    <span className="text">About</span>
                   </a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" data-bs-toggle="tab" href="#menu1">
+                <li className="nav-item">
+                  <a className="nav-link" data-bs-toggle="tab" href="#menu1">
                     <span className="icon">
                       <BiCabinet />
                     </span>
                     <span className="text">Previous Offices</span>
                   </a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" data-bs-toggle="tab" href="#menu2">
+                <li className="nav-item">
+                  <a className="nav-link" data-bs-toggle="tab" href="#menu2">
                     <span className="icon">
                       <FaUserGraduate />
                     </span>
@@ -71,8 +90,8 @@ const Profile = () => {
                 </li>
               </ul>
 
-              <div class="tab-content">
-                <div class="tab-pane container active" id="home">
+              <div className="tab-content">
+                <div className="tab-pane container active" id="home">
                   <p className="mt-3">
                     Alex Otti (born 18 February 1965) is a Nigerian economist,
                     banker, investor, philanthropist, and politician, serving as
@@ -83,10 +102,10 @@ const Profile = () => {
                     platform of All Progressives Grand Alliance (APGA).
                   </p>
                 </div>
-                <div class="tab-pane container fade" id="menu1">
+                <div className="tab-pane container fade" id="menu1">
                   ...
                 </div>
-                <div class="tab-pane container fade" id="menu2">
+                <div className="tab-pane container fade" id="menu2">
                   ...
                 </div>
               </div>

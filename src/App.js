@@ -20,13 +20,18 @@ function App() {
 
       const posts = data.map(post => ({
         id: post.id,
+        gender: post.acf.gender,
+        dob: post.acf.date_of_birth,
+        phone: post.acf.phone_number,
+        email: post.acf.email_address,
         title: post.title.rendered,
-        featuredImage: post._embedded['wp:featuredmedia'][0].source_url, // Extract featured image URL'
+        featuredImage: post._embedded['wp:featuredmedia'][0].source_url,
         district: post._embedded['wp:term'][1][0]?.name,
         party: post._embedded['wp:term'][2][0]?.name,
       }));
 
       setSenators(posts);
+      
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -44,7 +49,7 @@ function App() {
         <Route path="/" exact element={<Home />} />
         <Route path="/governor" element={<Governor />} />
         <Route path="/senator" element={<Senator getSenators={getSenators} senators={senators} />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile/:id" element={<Profile getSenators={getSenators} senators={senators} />} />
       </Routes>
     </div>
   );
