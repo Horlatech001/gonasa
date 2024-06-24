@@ -1,11 +1,10 @@
-import "./senator.css";
 import { BiPlus, BiMinus } from "react-icons/bi";
 import { useState, useEffect } from "react";
 import states from "../../data";
 import { parties } from "../../data";
 import { Link } from "react-router-dom";
 
-const Senator = ({ senators }) => {
+const Hor = ({ hor }) => {
   const [isOpen1, setIsOpen1] = useState(true);
   const [isOpen2, setIsOpen2] = useState(false);
   const [visibleStates, setVisibleStates] = useState(states.slice(0, 5));
@@ -19,15 +18,15 @@ const Senator = ({ senators }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
 
-  const [filteredSenators, setFilteredSenators] = useState([]);
+  const [filteredHors, setFilteredHors] = useState([]);
 
   useEffect(() => {
     // Ensure currentPage is set to 1 if filtered result is less than itemsPerPage
-    const totalPages = Math.ceil(filteredSenators.length / itemsPerPage);
+    const totalPages = Math.ceil(filteredHors.length / itemsPerPage);
     if (totalPages === 1 && currentPage !== 1) {
       setCurrentPage(1);
     }
-  }, [filteredSenators, currentPage]); // Add filteredSenators and currentPage as dependencies
+  }, [filteredHors, currentPage]); // Add filteredHors and currentPage as dependencies
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -36,7 +35,7 @@ const Senator = ({ senators }) => {
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
-  const totalPages = Math.ceil(filteredSenators.length / itemsPerPage);
+  const totalPages = Math.ceil(filteredHors.length / itemsPerPage);
 
   const renderPagination = () => {
     if (totalPages <= 1) {
@@ -104,18 +103,18 @@ const Senator = ({ senators }) => {
 
   useEffect(() => {
     // Update filtered senators when selected parties change
-    const filtered = senators.filter((senator) =>
+    const filtered = hor.filter((h) =>
       selectedParties.length === 0
         ? true
-        : selectedParties.includes(senator.party)
+        : selectedParties.includes(h.party)
     );
-    setFilteredSenators(filtered);
-  }, [selectedParties, senators]);
+    setFilteredHors(filtered);
+  }, [selectedParties, hor]);
 
   return (
     <>
       <div className="title">
-        <p>Distinguished Senators</p>
+        <p>Honorable HOR</p>
         <div></div>
       </div>
 
@@ -219,25 +218,24 @@ const Senator = ({ senators }) => {
             </div>
           </div>
           <div className="col-lg-9 col-md-8 senator_box">
-            {filteredSenators.length === 0 ? (
-              <p>No Senator Matched</p>
+            {filteredHors.length === 0 ? (
+              <p>No HOR Matched</p>
             ) : (
-              filteredSenators.slice(indexOfFirstItem, indexOfLastItem).map((senator, index) => (
+              filteredHors.slice(indexOfFirstItem, indexOfLastItem).map((h, index) => (
                 <div key={index} className="s_card1">
                   <div className="senator_card">
                     <div className="s_img">
-                      <img src={senator?.featuredImage} alt={senator.name} />
+                      <img src={h?.featuredImage} alt={h.name} />
                     </div>
                     <div className="s_details">
-                      <Link className="names" to={`/profile/${senator.id}`} style={{textDecoration:"none", color:"black", fontWeight:"bold"}}>
-                        <span>{`Sen. ${senator?.title}`}</span>
+                      <Link className="names" to={`/hor/profile/${h.id}`} style={{textDecoration:"none", color:"black", fontWeight:"bold"}}>
+                        <span>{`Hon. ${h?.title}`}</span>
                       </Link>
-                      <p>{senator?.district}</p>
+                      <p>{h?.district}</p>
                     </div>
                   </div>
                 </div>
-              ))
-            )}
+              )))}
           </div>
           <div className="pagination">
             <ul className="pagination justify-content-center">
@@ -259,4 +257,4 @@ const Senator = ({ senators }) => {
   );
 };
 
-export default Senator;
+export default Hor;

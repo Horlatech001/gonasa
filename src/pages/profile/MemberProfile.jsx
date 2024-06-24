@@ -1,21 +1,24 @@
 import { useEffect, useState } from "react";
 import "./profile.css";
-import { BiUserCircle } from "react-icons/bi";
-import { BiCabinet } from "react-icons/bi";
+import { BiUserCircle, BiCabinet } from "react-icons/bi";
 import { FaUserGraduate } from "react-icons/fa";
 import { useParams } from "react-router-dom";
-const Profile = ({ senators }) => {
-  const { id } = useParams();
-  const senatorId = parseInt(id);
 
-  const [senator, setSenator] = useState(null);
+const MemberProfile = ({ senators, hor, type }) => {
+  const { id } = useParams();
+  const memberId  = parseInt(id);
+
+  const [member, setMember] = useState(null);
 
   useEffect(() => {
-    const foundSenator = senators.find((senator) => senator.id === senatorId);
-    setSenator(foundSenator);
-  }, [senators, senatorId]);
+    const foundMember = type === "senator"
+      ? senators.find((member) => member.id === memberId)
+      : hor.find((member) => member.id === memberId);
 
-  if (!senator) {
+    setMember(foundMember);
+  }, [senators, hor, memberId, type]);
+
+  if (!member) {
     return <div>Loading...</div>;
   }
 
@@ -25,28 +28,28 @@ const Profile = ({ senators }) => {
         <div className="row">
           <div className="col-lg-10 offset-lg-1 right_section pt-5">
             <div className="image_box">
-              <img src={senator?.featuredImage} alt={senator?.title} />
+              <img src={member?.featuredImage} alt={member?.title} />
             </div>
             <div>
               <div className="name">
-                <span>{`Sen. ${senator?.title}`}</span>
-                <span>{senator?.district}</span>
+                <span>{`${type === "senator" ? "Sen." : "Hon."} ${member?.title}`}</span>
+                <span>{member?.district}</span>
               </div>
               <div className="dob mt-2">
                 <b>Date of Birth:</b>
-                <span className="ms-1">{senator?.dob}</span>
+                <span className="ms-1">{member?.dob}</span>
               </div>
               <div className="party">
                 <b>Party: </b>
-                <span className="ms-1">{senator?.party}</span>
+                <span className="ms-1">{member?.party}</span>
               </div>
               <div className="party">
                 <b>Phone: </b>
-                <span className="ms-1">{senator?.phone}</span>
+                <span className="ms-1">{member?.phone}</span>
               </div>
               <div className="party">
                 <b>Email: </b>
-                <span className="ms-1">{senator?.email}</span>
+                <span className="ms-1">{member?.email}</span>
               </div>
               <div className="email">
                 <b>Address: </b>
@@ -126,4 +129,4 @@ const Profile = ({ senators }) => {
   );
 };
 
-export default Profile;
+export default MemberProfile;

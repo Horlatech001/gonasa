@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import Logo from "../../images/logo.png";
 import Hamburger from "../../images/Vector.png";
 import "./navbar.css"
-const Navbar = () => {
+const Navbar = ({ getSenators, getHor }) => {
     return (
         <nav className="navbar navbar-expand-lg shadow-sm nav_bar">
             <div className="container-fluid">
@@ -18,11 +18,25 @@ const Navbar = () => {
                         <li className="nav-item">
                             <Link className="nav-link active" aria-current="page" to="/">Home</Link>
                         </li>
-                        <li className="nav-item">
-                            <Link className="nav-link" to="/senator">Senator</Link>
+                        <li className="nav-item dropdown hover-dropdown">
+                            <Link className="nav-link dropdown-toggle" to="#" id="horDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Senators
+                            </Link>
+                            <ul className="dropdown-menu" aria-labelledby="horDropdown">
+                                <li><Link className="dropdown-item" to="/senator" onClick={() => getSenators(23)}>8th Assembly</Link></li>
+                                <li><Link className="dropdown-item" to="/senator" onClick={() => getSenators(24)}>9th Assembly</Link></li>
+                                <li><Link className="dropdown-item" to="/senator" onClick={() => getSenators(25)}>10th Assembly</Link></li>
+                            </ul>
                         </li>
-                        <li className="nav-item">
-                            <Link className="nav-link" to="/hor">Member,HOR</Link>
+                        <li className="nav-item dropdown hover-dropdown">
+                            <Link className="nav-link dropdown-toggle" to="#" id="horDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Member, HOR
+                            </Link>
+                            <ul className="dropdown-menu" aria-labelledby="horDropdown">
+                                <li><Link className="dropdown-item" to="/hor" onClick={() => getHor(23)}>8th Assembly</Link></li>
+                                <li><Link className="dropdown-item" to="/hor" onClick={() => getHor(24)}>9th Assembly</Link></li>
+                                <li><Link className="dropdown-item" to="/hor" onClick={() => getHor(25)}>10th Assembly</Link></li>
+                            </ul>
                         </li>
                         <li className="nav-item">
                             <Link className="nav-link" to="/assembly">State Assembly</Link>
@@ -30,11 +44,11 @@ const Navbar = () => {
                         <li className="nav-item">
                             <Link className="nav-link" to="#">All State</Link>
                         </li>
-                        <li className="nav-item">
+                        {/* <li className="nav-item">
                             <Link className="nav-link" to="#">
                                 <img src={Hamburger} alt="hamburger" />
                             </Link>
-                        </li>
+                        </li> */}
                     </ul>
                 </div>
             </div>

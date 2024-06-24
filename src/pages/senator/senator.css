@@ -39,6 +39,12 @@
     margin-top: 50px;
 }
 
+.page-link{
+    background-color: #73737380 !important;
+    border: #000 !important;
+    color: #fff !important;
+}
+
 .footer {
     margin-top: 50px;
     background-color: #000000;

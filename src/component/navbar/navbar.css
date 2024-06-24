@@ -19,6 +19,34 @@
     width: 160px;
 }
 
+.nav-item.dropdown.hover-dropdown:hover .dropdown-menu {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+    margin-top: -10px;
+}
+
+.dropdown-menu {
+    display: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.nav-item.dropdown.hover-dropdown:hover > .nav-link.dropdown-toggle::after {
+    transform: rotate(180deg);
+}
+
+.nav-link.dropdown-toggle::after {
+    transition: transform 0.3s ease;
+}
+
+.dropdown-item{
+    font-weight: bold !important;
+    font-size: 14px; 
+}
+
+
 @media (max-width: 480px){
     .nav_bar{
         padding: 16px 20px !important;

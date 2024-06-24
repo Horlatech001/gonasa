@@ -36,6 +36,7 @@ const Governor = () => {
     setSearchQueryState(query);
     const filtered = states.filter((state) =>
       state.label.toLowerCase().includes(query)
+
     );
     setVisibleStates(filtered.slice(0, 5));
   };
@@ -162,68 +163,80 @@ const Governor = () => {
           <div className="col-lg-9 col-md-8 governor_box">
             <div className="g_card1">
               <div className="governor_card">
-                <div>
+                <div className="g_img">
                   <img src={Alex} alt="alex" />
                 </div>
-                <div>
-                  <Link className="names" to="/profile">
-                    <span>ALEX</span>
-                    <span>OTTI</span>
+                <div className="g_details">
+                  <Link className="names" to="/profile" style={{textDecoration:"none"}}>
+                    <span>Alex Otti</span>
                   </Link>
+                  <p>Abia State</p>
                 </div>
-                <p>Abia State</p>
-              </div>
-              <div className="governor_card">
-                <div>
-                  <img src={Fintiri} alt="alex" />
-                </div>
-                <div className="names">
-                  <span>AHMADU UMARU</span>
-                  <span>FINTIRI</span>
-                </div>
-                <p>Adamawa State</p>
-              </div>
-              <div className="governor_card">
-                <div>
-                  <img src={Umo} alt="alex" />
-                </div>
-                <div className="names">
-                  <span>UMO</span>
-                  <span>ENO</span>
-                </div>
-                <p>Akwa Ibom State</p>
               </div>
             </div>
             <div className="g_card1">
               <div className="governor_card">
-                <div>
+                <div className="g_img">
+                  <img src={Fintiri} alt="alex" />
+                </div>
+                <div className="g_details">
+                  <Link className="names" to="/profile">
+                    <span>AHMADU UMARU</span>
+                  </Link>
+                  <p>Adamawa State</p>
+                </div>
+              </div>
+            </div>
+            <div className="g_card1">
+              <div className="governor_card">
+                <div className="g_img">
+                  <img src={Umo} alt="alex" />
+                </div>
+                <div className="g_details">
+                  <Link className="names" to="/profile">
+                    <span>Umo Eno</span>
+                  </Link>
+                  <p>Akwa Ibom State</p>
+                </div>
+              </div>
+            </div>
+            <div className="g_card1">
+              <div className="governor_card">
+                <div className="g_img">
                   <img src={Charles} alt="alex" />
                 </div>
-                <div className="names">
-                  <span>CHARLES</span>
-                  <span>SOLUDO</span>
+                <div className="g_details">
+                  <Link className="names" to="/profile">
+                    <span>Charles Soludo</span>
+                  </Link>
+                  <p>Anambra State</p>
                 </div>
-                <p>Anambra State</p>
               </div>
+            </div>
+            <div className="g_card1">
               <div className="governor_card">
-                <div>
+                <div className="g_img">
                   <img src={Bala} alt="alex" />
                 </div>
-                <div className="names">
-                  <span>BALA</span>
-                  <span>MUHAMMED</span>
+                <div className="g_details">
+                  <Link className="names" to="/profile">
+                    <span>Bala Muhammed</span>
+                  </Link>
+                  <p>Bauchi State</p>
                 </div>
-                <p>Bauchi State</p>
               </div>
+            </div>
+            <div className="g_card1">
               <div className="governor_card">
-                <div>
+                <div className="g_img">
                   <img src={Diri} alt="alex" />
                 </div>
-                <div className="names">
-                  <span>DOUYE</span>
-                  <span>DIRI</span>
+                <div className="g_details">
+                  <Link className="names" to="/profile">
+                    <span>Douye Diri </span>
+                  </Link>
+                  <p>Bayelsa State</p>
                 </div>
-                <p>Bayelsa State</p>
               </div>
             </div>
           </div>

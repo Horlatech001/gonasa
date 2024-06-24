@@ -62,42 +62,47 @@
     font-size: 20px;
 }
 
+Link{
+    text-decoration: none !important;
+}
+
 .governor_box {
     display: flex;
-    /* flex-direction: column; */
     flex-wrap: wrap;
-    gap: 20px;
+    justify-content: space-evenly;
 }
 
 .g_card1 {
-    display: flex;
-    justify-content: space-evenly;
-    /* background-color: grey; */
+    flex: 0 0 calc(33.33% - 50px);
+    margin-bottom: 50px;
 }
 
+.governor_card {
+    width: 250px;
+    height: 220px;
+    margin: auto;
+}
 
-.names {
-    display: flex;
-    flex-direction: column;
+.g_img {
+    width: 100%;
+    height: 80%;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.g_img>img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.g_details > Link {
     text-decoration: none;
-    color: #000000;
+    color: red !important;
 }
-
-.names>span {
-    font-size: 20px;
-    font-weight: bold;
-}
-
-.governor_card>p {
+.g_details>p {
     color: #06508D;
     font-weight: bold;
-}
-
-.governor_card>div>img {
-    width: 200px;
-    height: 180px;
-    object-fit: cover;
-    border-radius: 10px;
 }
 
 .pagination>img {
@@ -121,12 +126,13 @@
 
 @media (max-width: 992px) {
     .governor_box {
-        height: auto;
+        justify-content: space-between;
     }
 
-    .governor_card>div>img {
-        width: 150px;
-        height: 150px;
+    .governor_card {
+        width: 220px;
+        height: 220px;
+        margin: auto;
     }
 
     .names>span {
@@ -144,8 +150,37 @@
 }
 
 @media (max-width: 768px) {
-    .governor_card>div>img {
-        width: 120px;
-        height: 120px;
+    .governor_box {
+        justify-content: space-between;
+    }
+
+    .governor_card {
+        width: 220px;
+        height: 220px;
+        margin: auto;
+    }
+}
+
+@media (max-width: 575px) {
+    .governor_box {
+        justify-content: space-between;
+    }
+
+    .governor_card {
+        width: 180px;
+        height: 180px;
+        margin: auto;
+    }
+}
+
+@media (max-width: 385px) {
+    .governor_box {
+        justify-content: space-between;
+    }
+
+    .governor_card {
+        width: 150px;
+        height: 150px;
+        margin: auto;
     }
 }
