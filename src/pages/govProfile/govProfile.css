@@ -1,0 +1,103 @@
+.profile {
+    min-height: 100vh;
+}
+
+.name {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+}
+
+.Dname{
+    margin-top: 10px;
+}
+
+.Dname > span{
+    font-weight: bold;
+    font-size: 22px;
+}
+
+.name :nth-child(1) {
+    font-size: 32px;
+}
+
+.name :nth-child(2) {
+    font-size: 20px;
+    font-weight: lighter;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+}
+
+.icon {
+    font-size: 22px;
+    margin-right: 5px;
+}
+
+.right_section {
+    height: auto;
+    margin-top: 50px !important;
+    display: flex;
+    gap: 30px;
+}
+
+.image_box {
+    width: 300px;
+    height: 300px;
+
+}
+.Dimage_box {
+    width: 200px;
+    height: 200px;
+}
+
+.Dimage_box>img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.contact>h4 {
+    font-size: 18px;
+}
+
+
+@media (max-width:480px) {
+    .right_section {
+        margin-top: 0px;
+        margin: auto;
+        gap: 10px;
+    }
+
+    .image_box {
+        width: 200px;
+        height: 200px;
+    }
+
+    .name{
+        margin-top: 10px;
+    }
+
+    .name :nth-child(1){
+        font-size: 22px;
+        font-weight: bold;
+    }
+
+    .name :nth-child(2){
+        font-size: 15px;
+    }
+
+    .dob > b, .dob > span, .party > b, .party > span {
+        font-size: 15px;
+    }
+
+    .text {
+        font-size: 14px;
+    }
+
+    .tab-pane > p {
+        font-size: 14px;
+    }
+}

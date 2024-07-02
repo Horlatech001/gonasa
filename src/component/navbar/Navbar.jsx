@@ -1,9 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import Logo from "../../images/logo.png";
-import Hamburger from "../../images/Vector.png";
 import "./navbar.css"
-const Navbar = ({ getSenators, getHor }) => {
+const Navbar = ({ getSenators, getHor, getGovernors }) => {
     return (
         <nav className="navbar navbar-expand-lg shadow-sm nav_bar">
             <div className="container-fluid">
@@ -17,6 +16,9 @@ const Navbar = ({ getSenators, getHor }) => {
                     <ul className="navbar-nav ms-auto mb-2 mb-lg-0 navbar_ul">
                         <li className="nav-item">
                             <Link className="nav-link active" aria-current="page" to="/">Home</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/governor" onClick={() => getGovernors()}>Governors</Link>
                         </li>
                         <li className="nav-item dropdown hover-dropdown">
                             <Link className="nav-link dropdown-toggle" to="#" id="horDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -41,14 +43,6 @@ const Navbar = ({ getSenators, getHor }) => {
                         <li className="nav-item">
                             <Link className="nav-link" to="/assembly">State Assembly</Link>
                         </li>
-                        <li className="nav-item">
-                            <Link className="nav-link" to="#">All State</Link>
-                        </li>
-                        {/* <li className="nav-item">
-                            <Link className="nav-link" to="#">
-                                <img src={Hamburger} alt="hamburger" />
-                            </Link>
-                        </li> */}
                     </ul>
                 </div>
             </div>

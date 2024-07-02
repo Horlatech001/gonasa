@@ -1,34 +1,73 @@
 import "./governor.css";
-import Alex from "../../images/Alex otti.jpg";
-import Fintiri from "../../images/Fintiri.jpg";
-import Umo from "../../images/Umo.jpg";
-import Charles from "../../images/Charles-Soludo.jpg";
-import Bala from "../../images/Bala.jpg";
-import Diri from "../../images/Douye-Diri.jpg";
 import { BiPlus, BiMinus } from "react-icons/bi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import states from "../../../src/data";
 import { parties } from "../../../src/data";
-import Pagination from "../../images/pagination.png";
 import { Link } from "react-router-dom";
 
-const Governor = () => {
+const Governor = ({governors}) => {
   const [isOpen1, setIsOpen1] = useState(true);
   const [isOpen2, setIsOpen2] = useState(false);
   const [visibleStates, setVisibleStates] = useState(states.slice(0, 5));
   const [visibleParties, setVisibleParties] = useState(parties.slice(0, 5));
 
+  const [selectedParties, setSelectedParties] = useState([]);
+
   const [searchQueryState, setSearchQueryState] = useState("");
   const [searchQueryParty, setSearchQueryParty] = useState("");
 
-  const toggleAccordion1 = () => {
-    setIsOpen1(!isOpen1);
-    setIsOpen2(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6;
+
+  const [filteredGovernors, setFilteredGovernors] = useState([]);
+
+  useEffect(() => {
+    // Ensure currentPage is set to 1 if filtered result is less than itemsPerPage
+    const totalPages = Math.ceil(filteredGovernors.length / itemsPerPage);
+    if (totalPages === 1 && currentPage !== 1) {
+      setCurrentPage(1);
+    }
+  }, [filteredGovernors, currentPage]); // Add filteredSenators and currentPage as dependencies
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
   };
 
-  const toggleAccordion2 = () => {
-    setIsOpen2(!isOpen2);
-    setIsOpen1(false);
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+
+  const totalPages = Math.ceil(filteredGovernors.length / itemsPerPage);
+
+  const renderPagination = () => {
+    if (totalPages <= 1) {
+      return null; // Hide pagination buttons if there's only one page or less
+    }
+
+    const pages = [];
+    for (let i = 1; i <= totalPages; i++) {
+      pages.push(
+        <li
+          key={i}
+          className={`page-item ${currentPage === i ? "active" : ""}`}
+        >
+          <button className="page-link" onClick={() => handlePageChange(i)}>
+            {i}
+          </button>
+        </li>
+      );
+    }
+    return pages;
+  };
+
+
+  const toggleAccordion = (accordionNumber) => {
+    if (accordionNumber === 1) {
+      setIsOpen1(!isOpen1);
+      setIsOpen2(false);
+    } else if (accordionNumber === 2) {
+      setIsOpen2(!isOpen2);
+      setIsOpen1(false);
+    }
   };
 
   const handleSearchState = (e) => {
@@ -36,7 +75,6 @@ const Governor = () => {
     setSearchQueryState(query);
     const filtered = states.filter((state) =>
       state.label.toLowerCase().includes(query)
-
     );
     setVisibleStates(filtered.slice(0, 5));
   };
@@ -50,13 +88,29 @@ const Governor = () => {
     setVisibleParties(filtered.slice(0, 5));
   };
 
-  const filteredStates = visibleStates.filter((state) =>
-    state.label.toLowerCase().includes(searchQueryState.toLowerCase())
-  );
+  const handlePartyChange = (e) => {
+    const party = e.target.value;
+    const isChecked = e.target.checked;
 
-  const filteredParties = visibleParties.filter((party) =>
-    party.label.toLowerCase().includes(searchQueryParty.toLowerCase())
-  );
+    let updatedParties;
+    if (isChecked) {
+      updatedParties = [...selectedParties, party];
+    } else {
+      updatedParties = selectedParties.filter((p) => p !== party);
+    }
+
+    setSelectedParties(updatedParties);
+  };
+
+  useEffect(() => {
+    // Update filtered senators when selected parties change
+    const filtered = governors.filter((governor) =>
+      selectedParties.length === 0
+        ? true
+        : selectedParties.includes(governor.party)
+    );
+    setFilteredGovernors(filtered);
+  }, [selectedParties, governors]);
 
   return (
     <>
@@ -77,7 +131,7 @@ const Governor = () => {
                   <div
                     className="accordion-button collapsed"
                     type="button"
-                    onClick={toggleAccordion1}
+                    onClick={() => toggleAccordion(1)}
                     aria-expanded={isOpen1 ? "true" : "false"}
                     aria-controls="flush-collapseOne"
                     data-bs-target="#flush-collapseOne"
@@ -91,9 +145,8 @@ const Governor = () => {
                 </h2>
                 <div
                   id="flush-collapseOne"
-                  className={`accordion-collapse collapse ${
-                    isOpen1 ? "show" : ""
-                  }`}
+                  className={`accordion-collapse collapse ${isOpen1 ? "show" : ""
+                    }`}
                   data-bs-parent="#accordionFlushExample"
                 >
                   <div className="accordion-body">
@@ -120,7 +173,7 @@ const Governor = () => {
                   <div
                     className="accordion-button collapsed"
                     type="button"
-                    onClick={toggleAccordion2}
+                    onClick={() => toggleAccordion(2)}
                     aria-expanded={isOpen2 ? "true" : "false"}
                     aria-controls="flush-collapseTwo"
                     data-bs-target="#flush-collapseTwo"
@@ -134,9 +187,8 @@ const Governor = () => {
                 </h2>
                 <div
                   id="flush-collapseTwo"
-                  className={`accordion-collapse collapse ${
-                    isOpen2 ? "show" : ""
-                  }`}
+                  className={`accordion-collapse collapse ${isOpen2 ? "show" : ""
+                    }`}
                   data-bs-parent="#accordionFlushExample"
                 >
                   <div className="accordion-body">
@@ -148,7 +200,13 @@ const Governor = () => {
                     <ul className="mt-3">
                       {visibleParties.map((party) => (
                         <li key={party.id}>
-                          <input type="checkbox" id={party.id} />
+                          <input
+                            type="checkbox"
+                            id={party.id}
+                            value={party.label}
+                            onChange={handlePartyChange}
+                            checked={selectedParties.includes(party.label)}
+                          />
                           <label htmlFor={party.id} className="indented-label">
                             {party.label}
                           </label>
@@ -161,88 +219,31 @@ const Governor = () => {
             </div>
           </div>
           <div className="col-lg-9 col-md-8 governor_box">
-            <div className="g_card1">
-              <div className="governor_card">
-                <div className="g_img">
-                  <img src={Alex} alt="alex" />
+            {filteredGovernors.length === 0 ? (
+              <p>No Governor Matched</p>
+            ) : (
+              filteredGovernors.slice(indexOfFirstItem, indexOfLastItem).map((governor, index) => (
+                <div key={index} className="s_card1">
+                  <div className="senator_card">
+                    <div className="g_img">
+                      <img src={governor?.featuredImage} alt={governor.name} />
+                    </div>
+                    <div className="g_details">
+                      <Link className="names" to={`/gov/profile/${governor.id}`} style={{textDecoration:"none", color:"black", fontWeight:"bold"}}>
+                        <span>{`Gov. ${governor?.title}`}</span>
+                      </Link>
+                      <p>{governor?.state} State</p>
+                    </div>
+                  </div>
                 </div>
-                <div className="g_details">
-                  <Link className="names" to="/profile" style={{textDecoration:"none"}}>
-                    <span>Alex Otti</span>
-                  </Link>
-                  <p>Abia State</p>
-                </div>
-              </div>
-            </div>
-            <div className="g_card1">
-              <div className="governor_card">
-                <div className="g_img">
-                  <img src={Fintiri} alt="alex" />
-                </div>
-                <div className="g_details">
-                  <Link className="names" to="/profile">
-                    <span>AHMADU UMARU</span>
-                  </Link>
-                  <p>Adamawa State</p>
-                </div>
-              </div>
-            </div>
-            <div className="g_card1">
-              <div className="governor_card">
-                <div className="g_img">
-                  <img src={Umo} alt="alex" />
-                </div>
-                <div className="g_details">
-                  <Link className="names" to="/profile">
-                    <span>Umo Eno</span>
-                  </Link>
-                  <p>Akwa Ibom State</p>
-                </div>
-              </div>
-            </div>
-            <div className="g_card1">
-              <div className="governor_card">
-                <div className="g_img">
-                  <img src={Charles} alt="alex" />
-                </div>
-                <div className="g_details">
-                  <Link className="names" to="/profile">
-                    <span>Charles Soludo</span>
-                  </Link>
-                  <p>Anambra State</p>
-                </div>
-              </div>
-            </div>
-            <div className="g_card1">
-              <div className="governor_card">
-                <div className="g_img">
-                  <img src={Bala} alt="alex" />
-                </div>
-                <div className="g_details">
-                  <Link className="names" to="/profile">
-                    <span>Bala Muhammed</span>
-                  </Link>
-                  <p>Bauchi State</p>
-                </div>
-              </div>
-            </div>
-            <div className="g_card1">
-              <div className="governor_card">
-                <div className="g_img">
-                  <img src={Diri} alt="alex" />
-                </div>
-                <div className="g_details">
-                  <Link className="names" to="/profile">
-                    <span>Douye Diri </span>
-                  </Link>
-                  <p>Bayelsa State</p>
-                </div>
-              </div>
-            </div>
+              ))
+            )}
           </div>
-        </div>
-        <div className="pagination">
-          <img src={Pagination} alt="pagination" />
+          <div className="pagination">
+            <ul className="pagination justify-content-center">
+              {renderPagination()}
+            </ul>
+          </div>
         </div>
       </div>
 
