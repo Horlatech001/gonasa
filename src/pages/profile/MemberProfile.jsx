@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 
 const MemberProfile = ({ senators, hor, type }) => {
   const { id } = useParams();
-  const memberId  = parseInt(id);
+  const memberId = parseInt(id);
 
   const [member, setMember] = useState(null);
 
@@ -95,15 +95,7 @@ const MemberProfile = ({ senators, hor, type }) => {
 
               <div className="tab-content">
                 <div className="tab-pane container active" id="home">
-                  <p className="mt-3">
-                    Alex Otti (born 18 February 1965) is a Nigerian economist,
-                    banker, investor, philanthropist, and politician, serving as
-                    the current Governor of Abia State in Nigeria. He is from
-                    Isiala-ngwa. Otti is the former Group Managing Director of
-                    Diamond Bank Plc, a retail financial institution in Nigeria.
-                    Otti was a gubernatorial candidate of Abia State on the
-                    platform of All Progressives Grand Alliance (APGA).
-                  </p>
+                  <p className="mt-3" dangerouslySetInnerHTML={{ __html: member?.bio }} />
                 </div>
                 <div className="tab-pane container fade" id="menu1">
                   ...

@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 
 const GovProfile = ({ governors, type }) => {
   const { id } = useParams();
-  const memberId  = parseInt(id);
+  const memberId = parseInt(id);
 
   const [member, setMember] = useState(null);
 
@@ -14,7 +14,7 @@ const GovProfile = ({ governors, type }) => {
     const foundMember = governors.find((member) => member.id === memberId);
     setMember(foundMember);
   }, [governors, memberId]);
-  
+
 
   if (!member) {
     return <div>Loading...</div>;
@@ -49,22 +49,30 @@ const GovProfile = ({ governors, type }) => {
                 <b>Email: </b>
                 <span className="ms-1">{member?.email}</span>
               </div>
-              <div className="">
-                <b>First Term Begin Date: </b>
-                <span className="ms-1">{member?.firstTermBeginDate}</span>
-              </div>
-              <div className="">
-                <b>First Term End Date: </b>
-                <span className="ms-1">{member?.firstTermEndDate}</span>
-              </div>
-              <div className="">
-                <b>Second Term Begin Date: </b>
-                <span className="ms-1">{member?.secondTermBeginDate}</span>
-              </div>
-              <div className="">
-                <b>Second Term End Date: </b>
-                <span className="ms-1">{member?.secondTermBeginDate}</span>
-              </div>
+              {member?.firstTermBeginDate && (
+                <div className="">
+                  <b>First Term Begin Date: </b>
+                  <span className="ms-1">{member.firstTermBeginDate}</span>
+                </div>
+              )}
+              {member?.firstTermEndDate && (
+                <div className="">
+                  <b>First Term End Date: </b>
+                  <span className="ms-1">{member.firstTermEndDate}</span>
+                </div>
+              )}
+              {member?.secondTermBeginDate && (
+                <div className="">
+                  <b>Second Term Begin Date: </b>
+                  <span className="ms-1">{member.secondTermBeginDate}</span>
+                </div>
+              )}
+              {member?.secondTermEndDate && (
+                <div className="">
+                  <b>Second Term End Date: </b>
+                  <span className="ms-1">{member.secondTermEndDate}</span>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -105,15 +113,7 @@ const GovProfile = ({ governors, type }) => {
 
               <div className="tab-content">
                 <div className="tab-pane container active" id="home">
-                  <p className="mt-3">
-                    Alex Otti (born 18 February 1965) is a Nigerian economist,
-                    banker, investor, philanthropist, and politician, serving as
-                    the current Governor of Abia State in Nigeria. He is from
-                    Isiala-ngwa. Otti is the former Group Managing Director of
-                    Diamond Bank Plc, a retail financial institution in Nigeria.
-                    Otti was a gubernatorial candidate of Abia State on the
-                    platform of All Progressives Grand Alliance (APGA).
-                  </p>
+                  <p className="mt-3" dangerouslySetInnerHTML={{ __html: member?.bio }} />
                 </div>
                 <div className="tab-pane container fade" id="menu1">
                   ...
