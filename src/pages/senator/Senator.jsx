@@ -1,7 +1,7 @@
 import "./senator.css";
 import { BiPlus, BiMinus } from "react-icons/bi";
 import { useState, useEffect } from "react";
-import states from "../../data";
+import states from "../../../src/data";
 import { parties } from "../../data";
 import { Link } from "react-router-dom";
 
@@ -12,6 +12,7 @@ const Senator = ({ senators }) => {
   const [visibleParties, setVisibleParties] = useState(parties.slice(0, 5));
 
   const [selectedParties, setSelectedParties] = useState([]);
+  const [selectedStates, setSelectedStates] = useState([]);
 
   const [searchQueryState, setSearchQueryState] = useState("");
   const [searchQueryParty, setSearchQueryParty] = useState("");
@@ -20,6 +21,39 @@ const Senator = ({ senators }) => {
   const itemsPerPage = 6;
 
   const [filteredSenators, setFilteredSenators] = useState([]);
+
+  useEffect(() => {
+    const filterByParty = () => {
+      return senators.filter((senator) =>
+        selectedParties.length === 0 ? true : selectedParties.includes(senator.party)
+      );
+    };
+
+    const filterByState = () => {
+      return senators.filter((senator) =>
+        selectedStates.length === 0 ? true : selectedStates.includes(senator.state)
+      );
+    };
+
+    const filteredByParty = filterByParty();
+    const filteredByState = filterByState();
+
+    // Combine the two filters to get the final filtered result
+    if (selectedParties.length > 0 && selectedStates.length > 0) {
+      setFilteredSenators(
+        senators.filter(
+          (senator) =>
+            filteredByParty.includes(senator) && filteredByState.includes(senator)
+        )
+      );
+    } else if (selectedParties.length > 0) {
+      setFilteredSenators(filteredByParty);
+    } else if (selectedStates.length > 0) {
+      setFilteredSenators(filteredByState);
+    } else {
+      setFilteredSenators(senators);
+    }
+  }, [selectedParties, selectedStates, senators]);
 
   useEffect(() => {
     // Ensure currentPage is set to 1 if filtered result is less than itemsPerPage
@@ -102,15 +136,19 @@ const Senator = ({ senators }) => {
     setSelectedParties(updatedParties);
   };
 
-  useEffect(() => {
-    // Update filtered senators when selected parties change
-    const filtered = senators.filter((senator) =>
-      selectedParties.length === 0
-        ? true
-        : selectedParties.includes(senator.party)
-    );
-    setFilteredSenators(filtered);
-  }, [selectedParties, senators]);
+  const handleStateChange = (e) => {
+    const stateS = e.target.value;
+    const isChecked = e.target.checked;
+
+    let updatedStates;
+    if (isChecked) {
+      updatedStates = [...selectedStates, stateS];
+    } else {
+      updatedStates = selectedStates.filter((s) => s !== stateS);
+    }
+
+    setSelectedStates(updatedStates);
+  };
 
   return (
     <>
@@ -156,13 +194,14 @@ const Senator = ({ senators }) => {
                       onChange={handleSearchState}
                     />
                     <ul className="mt-3">
-                      {visibleStates.map((state) => (
-                        <li key={state.id}>
-                          <input type="checkbox" id={state.id} />
-                          <label htmlFor={state.id} className="indented-label">
-                            {state.label}
-                          </label>
-                        </li>
+                      {visibleStates.map((stateS) => (
+                        <li key={stateS.id}>
+                        <input type="checkbox" id={stateS.id} value={stateS.label} onChange={handleStateChange}
+                          checked={selectedStates.includes(stateS.label)}/>
+                        <label htmlFor={stateS.id} className="indented-label">
+                          {stateS.label}
+                        </label>
+                      </li>
                       ))}
                     </ul>
                   </div>

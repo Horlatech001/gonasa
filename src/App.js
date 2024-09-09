@@ -21,7 +21,6 @@ function App() {
         throw new Error('Network response was not ok');
       }
       const data = await response.json();
-      console.log(data);
 
       const posts = data.map(post => ({
         id: post.id,
@@ -56,7 +55,7 @@ function App() {
         throw new Error('Network response was not ok');
       }
       const data = await response.json();
-
+      
       const filteredData = data.filter(post => post.assembly.includes(assemblyId));
 
       const posts = filteredData.map(post => ({
@@ -70,6 +69,7 @@ function App() {
         featuredImage: post._embedded['wp:featuredmedia'][0].source_url,
         district: post._embedded['wp:term'][1][0]?.name,
         party: post._embedded['wp:term'][2][0]?.name,
+        state: post._embedded['wp:term'][0][0]?.name,
       }));
 
       setSenators(posts);
@@ -100,6 +100,7 @@ function App() {
         featuredImage: post._embedded['wp:featuredmedia'][0].source_url,
         district: post._embedded['wp:term'][1][0]?.name,
         party: post._embedded['wp:term'][2][0]?.name,
+        state: post._embedded['wp:term'][0][0]?.name,
       }));
 
       setHor(posts);

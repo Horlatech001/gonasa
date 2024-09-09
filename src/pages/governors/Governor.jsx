@@ -12,6 +12,7 @@ const Governor = ({governors}) => {
   const [visibleParties, setVisibleParties] = useState(parties.slice(0, 5));
 
   const [selectedParties, setSelectedParties] = useState([]);
+  const [selectedStates, setSelectedStates] = useState([]);
 
   const [searchQueryState, setSearchQueryState] = useState("");
   const [searchQueryParty, setSearchQueryParty] = useState("");
@@ -20,6 +21,39 @@ const Governor = ({governors}) => {
   const itemsPerPage = 6;
 
   const [filteredGovernors, setFilteredGovernors] = useState([]);
+
+  useEffect(() => {
+    const filterByParty = () => {
+      return governors.filter((governor) =>
+        selectedParties.length === 0 ? true : selectedParties.includes(governor.party)
+      );
+    };
+
+    const filterByState = () => {
+      return governors.filter((governor) =>
+        selectedStates.length === 0 ? true : selectedStates.includes(governor.state)
+      );
+    };
+
+    const filteredByParty = filterByParty();
+    const filteredByState = filterByState();
+
+    // Combine the two filters to get the final filtered result
+    if (selectedParties.length > 0 && selectedStates.length > 0) {
+      setFilteredGovernors(
+        governors.filter(
+          (governor) =>
+            filteredByParty.includes(governor) && filteredByState.includes(governor)
+        )
+      );
+    } else if (selectedParties.length > 0) {
+      setFilteredGovernors(filteredByParty);
+    } else if (selectedStates.length > 0) {
+      setFilteredGovernors(filteredByState);
+    } else {
+      setFilteredGovernors(governors);
+    }
+  }, [selectedParties, selectedStates, governors]);
 
   useEffect(() => {
     // Ensure currentPage is set to 1 if filtered result is less than itemsPerPage
@@ -102,15 +136,19 @@ const Governor = ({governors}) => {
     setSelectedParties(updatedParties);
   };
 
-  useEffect(() => {
-    // Update filtered senators when selected parties change
-    const filtered = governors.filter((governor) =>
-      selectedParties.length === 0
-        ? true
-        : selectedParties.includes(governor.party)
-    );
-    setFilteredGovernors(filtered);
-  }, [selectedParties, governors]);
+  const handleStateChange = (e) => {
+    const stateS = e.target.value;
+    const isChecked = e.target.checked;
+
+    let updatedStates;
+    if (isChecked) {
+      updatedStates = [...selectedStates, stateS];
+    } else {
+      updatedStates = selectedStates.filter((s) => s !== stateS);
+    }
+
+    setSelectedStates(updatedStates);
+  };
 
   return (
     <>
@@ -156,11 +194,12 @@ const Governor = ({governors}) => {
                       onChange={handleSearchState}
                     />
                     <ul className="mt-3">
-                      {visibleStates.map((state) => (
-                        <li key={state.id}>
-                          <input type="checkbox" id={state.id} />
-                          <label htmlFor={state.id} className="indented-label">
-                            {state.label}
+                      {visibleStates.map((stateS) => (
+                        <li key={stateS.id}>
+                          <input type="checkbox" id={stateS.id} value={stateS.label} onChange={handleStateChange}
+                            checked={selectedStates.includes(stateS.label)}/>
+                          <label htmlFor={stateS.id} className="indented-label">
+                            {stateS.label}
                           </label>
                         </li>
                       ))}

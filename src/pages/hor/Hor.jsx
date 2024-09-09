@@ -11,6 +11,7 @@ const Hor = ({ hor }) => {
   const [visibleParties, setVisibleParties] = useState(parties.slice(0, 5));
 
   const [selectedParties, setSelectedParties] = useState([]);
+  const [selectedStates, setSelectedStates] = useState([]);
 
   const [searchQueryState, setSearchQueryState] = useState("");
   const [searchQueryParty, setSearchQueryParty] = useState("");
@@ -19,6 +20,39 @@ const Hor = ({ hor }) => {
   const itemsPerPage = 6;
 
   const [filteredHors, setFilteredHors] = useState([]);
+
+  useEffect(() => {
+    const filterByParty = () => {
+      return hor.filter((h) =>
+        selectedParties.length === 0 ? true : selectedParties.includes(h.party)
+      );
+    };
+
+    const filterByState = () => {
+      return hor.filter((h) =>
+        selectedStates.length === 0 ? true : selectedStates.includes(h.state)
+      );
+    };
+
+    const filteredByParty = filterByParty();
+    const filteredByState = filterByState();
+
+    // Combine the two filters to get the final filtered result
+    if (selectedParties.length > 0 && selectedStates.length > 0) {
+      setFilteredHors(
+        hor.filter(
+          (h) =>
+            filteredByParty.includes(h) && filteredByState.includes(h)
+        )
+      );
+    } else if (selectedParties.length > 0) {
+      setFilteredHors(filteredByParty);
+    } else if (selectedStates.length > 0) {
+      setFilteredHors(filteredByState);
+    } else {
+      setFilteredHors(hor);
+    }
+  }, [selectedParties, selectedStates, hor]);
 
   useEffect(() => {
     // Ensure currentPage is set to 1 if filtered result is less than itemsPerPage
@@ -101,15 +135,19 @@ const Hor = ({ hor }) => {
     setSelectedParties(updatedParties);
   };
 
-  useEffect(() => {
-    // Update filtered senators when selected parties change
-    const filtered = hor.filter((h) =>
-      selectedParties.length === 0
-        ? true
-        : selectedParties.includes(h.party)
-    );
-    setFilteredHors(filtered);
-  }, [selectedParties, hor]);
+  const handleStateChange = (e) => {
+    const stateS = e.target.value;
+    const isChecked = e.target.checked;
+
+    let updatedStates;
+    if (isChecked) {
+      updatedStates = [...selectedStates, stateS];
+    } else {
+      updatedStates = selectedStates.filter((s) => s !== stateS);
+    }
+
+    setSelectedStates(updatedStates);
+  };
 
   return (
     <>
@@ -155,11 +193,12 @@ const Hor = ({ hor }) => {
                       onChange={handleSearchState}
                     />
                     <ul className="mt-3">
-                      {visibleStates.map((state) => (
-                        <li key={state.id}>
-                          <input type="checkbox" id={state.id} />
-                          <label htmlFor={state.id} className="indented-label">
-                            {state.label}
+                      {visibleStates.map((stateS) => (
+                        <li key={stateS.id}>
+                          <input type="checkbox" id={stateS.id} value={stateS.label} onChange={handleStateChange}
+                          checked={selectedStates.includes(stateS.label)}/>
+                          <label htmlFor={stateS.id} className="indented-label">
+                            {stateS.label}
                           </label>
                         </li>
                       ))}
