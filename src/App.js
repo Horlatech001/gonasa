@@ -14,43 +14,51 @@ function App() {
   const [hor, setHor] = useState([]);
   const [governors, setGovernors] = useState([]);
 
-  const getGovernors = async (assemblyId) => {
-    try {
-      const response = await fetch('https://wordpress-933231-4419286.cloudwaysapps.com/wp-json/wp/v2/governor?_embed');
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      const data = await response.json();
-
-      const posts = data.map(post => ({
-        id: post.id,
-        gender: post.acf.gender,
-        dob: post.acf.date_of_birth,
-        phone: post.acf.phone_number,
-        email: post.acf.email_address,
-        firstTermBeginDate: post.acf.first_term_begin_date,
-        firstTermEndDate: post.acf.first_term_end_date,
-        secondTermBeginDate: post.acf.second_term_begin_date,
-        secondTermEndDate: post.acf.second_term_end_date,
-        firstTermDeputyName: post.acf.deputy_details["first_term_deputy-name"],
-        firstTermDeputyImage: post.acf.deputy_details["first_term_deputy-name-image"],
-        title: post.title.rendered,
-        bio: post.content.rendered,
-        featuredImage: post._embedded['wp:featuredmedia'][0].source_url,
-        state: post._embedded['wp:term'][0][0]?.name,
-        party: post._embedded['wp:term'][1][0]?.name,
-      }));
-
-      setGovernors(posts);
-
-    } catch (error) {
-      console.error('Error fetching data:', error);
+const getGovernors = async () => {
+  try {
+    const response = await fetch(
+      'https://wordpress-1440016-5385664.cloudwaysapps.com/wp-json/wp/v2/governor?_embed&per_page=100'
+    );
+    
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
     }
+
+    const data = await response.json();
+
+    const posts = data.map(post => ({
+      id: post.id,
+      gender: post.acf.gender,
+      dob: post.acf.date_of_birth,
+      phone: post.acf.phone_number,
+      email: post.acf.email_address,
+      firstTermBeginDate: post.acf.first_term_begin_date,
+      firstTermEndDate: post.acf.first_term_end_date,
+      secondTermBeginDate: post.acf.second_term_begin_date,
+      secondTermEndDate: post.acf.second_term_end_date,
+      firstTermDeputyName: post.acf.deputy_details?.["first_term_deputy-name"],
+      firstTermDeputyImage: post.acf.deputy_details?.["first_term_deputy-name-image"],
+      title: post.title.rendered,
+      bio: post.content.rendered,
+      featuredImage: post._embedded['wp:featuredmedia']?.[0]?.source_url,
+      state: post._embedded['wp:term']?.[0]?.[0]?.name,
+      party: post._embedded['wp:term']?.[1]?.[0]?.name,
+    }));
+
+    // ✅ Sort alphabetically by state
+    const sortedPosts = posts.sort((a, b) => a.state.localeCompare(b.state));
+
+    setGovernors(sortedPosts);
+
+  } catch (error) {
+    console.error('Error fetching data:', error);
   }
+};
+
 
   const getSenators = async (assemblyId) => {
     try {
-      const response = await fetch('https://wordpress-933231-4419286.cloudwaysapps.com/wp-json/wp/v2/senator?_embed');
+      const response = await fetch('https://wordpress-1440016-5385664.cloudwaysapps.com/wp-json/wp/v2/senator?_embed');
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -81,7 +89,7 @@ function App() {
 
   const getHor = async (assemblyId) => {
     try {
-      const response = await fetch('https://wordpress-933231-4419286.cloudwaysapps.com/wp-json/wp/v2/member-hor?_embed');
+      const response = await fetch('https://wordpress-1440016-5385664.cloudwaysapps.com/wp-json/wp/v2/member-hor?_embed');
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
